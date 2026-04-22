@@ -19,13 +19,13 @@ def create_movie(movie: MovieCreate, db: Session = Depends(get_db)):
     db.refresh(new_movie)
     return new_movie
 @router.delete("/movies/{movie_id}")
+
 def delete_movie(movie_id: int, db: Session = Depends(get_db)):
     movie = db.query(models.Movie).filter(models.Movie.id == movie_id).first()
 
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found")
 
-    # 🔴 Important: delete related bookings first
     db.query(models.Booking).filter(
         models.Booking.movie_id == movie_id
     ).delete()
@@ -61,19 +61,15 @@ def get_bookings(movie_id: int, db: Session = Depends(get_db)):
     bookings = db.query(models.Booking).filter(
         models.Booking.movie_id == movie_id
     ).all()
-
-    # return only seat names
     return [b.seat for b in bookings]
 
 @router.post("/movies/{movie_id}/book")
 def book_seat(movie_id: int, booking: BookingCreate, db: Session = Depends(get_db)):
 
-    # ✅ ADD THIS BLOCK (IMPORTANT)
     movie = db.query(Movie).filter(Movie.id == movie_id).first()
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found")
 
-    # 🔴 Duplicate seat check
     existing = db.query(Booking).filter(
         Booking.movie_id == movie_id,
         Booking.seat == booking.seat
@@ -85,7 +81,6 @@ def book_seat(movie_id: int, booking: BookingCreate, db: Session = Depends(get_d
             detail="Seat already booked"
         )
 
-    # 🔴 Max seats check
     count = db.query(Booking).filter(
         Booking.movie_id == movie_id,
         Booking.user_name == booking.user_name
@@ -94,7 +89,6 @@ def book_seat(movie_id: int, booking: BookingCreate, db: Session = Depends(get_d
     if count >= 5:
         raise HTTPException(status_code=400, detail="Max 5 seats allowed")
 
-    # ✅ Booking
     new_booking = Booking(
         movie_id=movie_id,
         seat=booking.seat,

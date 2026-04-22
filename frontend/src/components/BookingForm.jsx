@@ -93,7 +93,6 @@ function BookingForm({ selectedMovie, selectedSeats, setSelectedSeats, refreshMo
 
       refreshMovies();
 
-      // ✅ THIS IS THE FIX
       setRefreshKey(prev => prev + 1);
 
     } catch (err) {

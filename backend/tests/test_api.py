@@ -10,7 +10,7 @@ from main import app
 client = TestClient(app)
 
 
-# ✅ Test: Add Movie
+#  Add Movie
 def test_add_movie():
     response = client.post("/movies/", json={
         "title": "Test Movie",
@@ -20,14 +20,14 @@ def test_add_movie():
     assert response.json()["title"] == "Test Movie"
 
 
-# ✅ Test: Get Movies
+#  Get Movies
 def test_get_movies():
     response = client.get("/movies/")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
 
-# ✅ Test: Successful Booking
+#  Successful Booking
 def test_book_seat_success():
     # create movie first
     movie = client.post("/movies/", json={
@@ -44,7 +44,7 @@ def test_book_seat_success():
     assert "Seat booked" in response.json()["message"]
 
 
-# ❌ Test: Duplicate Seat Booking
+#  Duplicate Seat Booking
 def test_duplicate_seat_booking():
     movie = client.post("/movies/", json={
         "title": "Duplicate Movie",
@@ -67,7 +67,7 @@ def test_duplicate_seat_booking():
     assert "already booked" in response.json()["detail"]
 
 
-# ❌ Test: Max Seats Per User
+#  Max Seats Per User
 def test_max_seats_limit():
     movie = client.post("/movies/", json={
         "title": "Limit Movie",
@@ -91,7 +91,7 @@ def test_max_seats_limit():
     assert "max" in response.json()["detail"].lower()
 
 
-# ❌ Test: Invalid Movie ID
+#  Invalid Movie ID
 def test_invalid_movie():
     response = client.post("/movies/9999/book", json={
         "seat": "A1",

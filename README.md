@@ -1,94 +1,301 @@
 
-```
+---
+
 # 🎬 Movie Ticket Booking System
 
-A full-stack movie booking system built using FastAPI, ReactJS, SQLite, and OpenAPI-generated Python SDK.
+A full-stack Movie Ticket Booking System built using **FastAPI**, **SQLite**, and **ReactJS**.
+This project allows users to view movies, select seats, and book tickets with backend validation and OpenAPI-compliant APIs.
 
-Features include seat selection, booking restrictions, and API-based interaction.
+---
+
+## 🚀 Features
+
+###  Backend (FastAPI)
+
+* Add movies
+* View all movies
+* Book seats
+* Prevent duplicate seat booking
+* Limit max seats per user (5 seats)
+* OpenAPI (Swagger UI) support
+* Database migrations using Alembic
+* Unit testing with Pytest
+
+###  Frontend (ReactJS)
+
+* Display available movies
+* Seat selection grid
+* Real-time seat availability updates
+* Booking form with validation
+* API integration using Axios
+
+###  Database (SQLite)
+
+* Stores movies and bookings
+* Enforces data consistency
+
+###  SDK
+
+* Auto-generated Python SDK using OpenAPI Generator CLI
+
+---
+
+##  Project Structure
+
+```
+Movie-Ticket-Booking-System/
+│
+├── backend/
+│   ├── main.py
+│   ├── database.py
+│   ├── models.py
+│   ├── routes.py
+│   ├── schemas.py
+│   ├── requirements.txt
+│   ├── alembic/
+│   ├── tests/
+│   └── env/ (created automatically)
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── api/
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── package.json
+│
+├── movie_sdk/        # Generated SDK
+├── seed_data.sql     # Sample data
+├── setupdev.bat      # Setup script
+├── runapplication.bat # Run script
+├── sdk_test.py
+└── README.md
 ```
 
 ---
 
-## ⚙️ Tech Stack
+##  Setup Instructions
 
-```md
-- Backend: FastAPI, SQLAlchemy, SQLite, Alembic
-- Frontend: ReactJS, Axios
-- SDK: OpenAPI Generator CLI (Python)
+### 🔹 Prerequisites
+
+* Python 3.11+
+* Node.js (v16+ recommended)
+* npm
+
+---
+
+##  1. Setup Project
+
+Run:
+
+```bash
+setupdev.bat
+```
+
+This will:
+
+* Create Python virtual environment
+* Install backend dependencies
+* Run database migrations
+* Install frontend dependencies
+
+---
+
+##  2. Run Application
+
+```bash
+runapplication.bat
+```
+
+This will:
+
+* Start FastAPI backend → [http://localhost:8000](http://localhost:8000)
+* Start React frontend → [http://localhost:3000](http://localhost:3000)
+
+---
+
+##  API Documentation
+
+Open Swagger UI:
+
+```
+http://localhost:8000/docs
 ```
 
 ---
 
-## 🚀 Setup Instructions
+##  API Endpoints
 
-```md
-### Step 1: Setup
-run setupdev.bat
+### ➤ Add Movie
 
-### Step 2: Run Application
-run runapplication.bat
+```
+POST /movies/
+```
+
+###  Get Movies
+
+```
+GET /movies/
+```
+
+###  Book Seat
+
+```
+POST /movies/{movie_id}/book
 ```
 
 ---
 
-## 🌐 Access Points
+##  Business Logic (Important)
 
-```md
-Frontend: http://localhost:3000  
-Backend Docs: http://localhost:8000/docs  
-OpenAPI JSON: http://localhost:8000/openapi.json
-```
-
----
-
-## 🔌 API Endpoints
-
-```md
-POST /movies/ → Add movie  
-GET /movies/ → List movies  
-POST /movies/{id}/book → Book seat  
-GET /movies/{id}/bookings → Get booked seats  
-```
+* ❌ Cannot book same seat twice
+* ❌ Max 5 seats per user per movie
+* ❌ Cannot book non-existing movie
+* ✅ Real-time seat updates handled via API
 
 ---
 
-## 🧠 Business Logic
+##  Running Tests
 
-```md
-- Prevent duplicate seat booking  
-- Max 5 seats per user per movie  
-- Real-time seat availability  
-```
-
----
-
-## 🧩 SDK Usage
-
-```python
-from openapi_client import ApiClient, Configuration
-from openapi_client.api import default_api
-from openapi_client.models.booking_create import BookingCreate
-
-config = Configuration(host="http://localhost:8000")
-client = ApiClient(config)
-api = default_api.DefaultApi(client)
-
-movies = api.get_movies_movies_get()
-
-booking = BookingCreate(seat="B3", user_name="user")
-api.book_seat_movies_movie_id_book_post(
-    movie_id=2,
-    booking_create=booking
-)
-```
-
----
-
-## 🧪 Running Tests
-
-```md
+```bash
 cd backend
 pytest
 ```
+
+Expected:
+
+```
+6 passed
+```
+
+---
+
+##  SDK Usage
+
+Generate SDK:
+
+```bash
+npm install -g @openapitools/openapi-generator-cli
+openapi-generator-cli generate -i http://localhost:8000/openapi.json -g python -o movie_sdk
+```
+
+Example usage:
+
+```python
+from movie_sdk import ApiClient
+from movie_sdk.api.default_api import DefaultApi
+
+client = ApiClient(host="http://localhost:8000")
+api = DefaultApi(client)
+
+movies = api.get_movies_movies_get()
+print(movies)
+```
+
+---
+
+##  Database Schema
+
+### Movies Table
+
+```sql
+CREATE TABLE movies (
+    id INTEGER PRIMARY KEY,
+    title TEXT UNIQUE,
+    total_seats INT
+);
+```
+
+### Bookings Table
+
+```sql
+CREATE TABLE movie_bookings (
+    id INTEGER PRIMARY KEY,
+    movie_id INT,
+    seat TEXT,
+    user_name TEXT
+);
+```
+
+---
+
+##  Troubleshooting
+
+###  Axios Network Error
+
+* Ensure backend is running at `http://localhost:8000`
+* Check if API URL in frontend is correct
+
+---
+
+###  ModuleNotFoundError (sqlalchemy)
+
+```bash
+cd backend
+env\Scripts\activate
+pip install -r requirements.txt
+```
+
+---
+
+###  No Movies Showing
+
+* Backend auto-seeds movies on startup
+* Or add via Swagger UI
+
+---
+
+###  Port Already in Use
+
+Kill process or change port:
+
+```bash
+uvicorn main:app --reload --port 8001
+```
+
+---
+
+##  Design Decisions
+
+* Used FastAPI for high performance and OpenAPI support
+* SQLite for simplicity and portability
+* React for dynamic UI
+* Axios for API communication
+* Alembic for database migrations
+* Backend enforces all critical validations
+
+---
+
+##  Future Improvements
+
+* Authentication system
+* Multi-theatre support
+* Payment integration
+* Real-time updates using WebSockets
+
+---
+
+##  Notes
+
+* No Docker used (as per constraints)
+* Fully functional without manual configuration
+* Works on any system using provided scripts
+
+---
+
+##  Author
+
+**Aathi**
+
+---
+
+## Submission Status
+
+✔ Backend Complete
+✔ Frontend Complete
+✔ SDK Generated
+✔ Tests Passing
+✔ Scripts Working
+✔ README Provided
 
 ---

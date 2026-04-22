@@ -9,8 +9,6 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
-
-  // ✅ MOVE refreshKey HERE
   const [refreshKey, setRefreshKey] = useState(0);
 
   const fetchMovies = async () => {
@@ -46,7 +44,7 @@ function App() {
           />
         </div>
 
-        {/* SEAT + BOOKING */}
+        {/* SEAT & BOOKING */}
         {selectedMovie && (
           <div
             style={{
@@ -76,7 +74,7 @@ function App() {
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
                 refreshMovies={fetchMovies}
-                setRefreshKey={setRefreshKey} // ✅ pass setter
+                setRefreshKey={setRefreshKey}
               />
             </div>
           </div>

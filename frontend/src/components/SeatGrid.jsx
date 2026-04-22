@@ -6,15 +6,13 @@ function SeatGrid({ totalSeats, selectedSeats, setSelectedSeats, movieId ,refres
 
   const [bookedSeats, setBookedSeats] = useState([]);
   const [message, setMessage] = useState("");
-  const [type, setType] = useState(""); // success | error
+  const [type, setType] = useState("");
 
-  // 🔵 Generate rows dynamically (A, B, C...)
   const rowsNeeded = Math.ceil(totalSeats / seatsPerRow);
   const rows = Array.from({ length: rowsNeeded }, (_, i) =>
     String.fromCharCode(65 + i)
   );
 
-  // 🔵 Fetch booked seats from backend
   useEffect(() => {
     if (!movieId) return;
 
@@ -23,7 +21,6 @@ function SeatGrid({ totalSeats, selectedSeats, setSelectedSeats, movieId ,refres
       .catch(err => console.error(err));
   }, [movieId,refreshKey]);
 
-  // 🔵 Auto-hide popup
   useEffect(() => {
     if (!message) return;
 
@@ -31,7 +28,6 @@ function SeatGrid({ totalSeats, selectedSeats, setSelectedSeats, movieId ,refres
     return () => clearTimeout(timer);
   }, [message]);
 
-  // 🔵 Toggle seat selection
   const toggleSeat = (seat) => {
     if (bookedSeats.includes(seat)) return;
 
@@ -55,7 +51,7 @@ function SeatGrid({ totalSeats, selectedSeats, setSelectedSeats, movieId ,refres
   return (
     <div style={{ position: "relative" }}>
       
-      {/* 🔴 Popup Message */}
+      {/* Popup Message */}
       {message && (
         <div
           style={{
@@ -75,7 +71,7 @@ function SeatGrid({ totalSeats, selectedSeats, setSelectedSeats, movieId ,refres
         </div>
       )}
 
-      {/* 🔵 Seat Grid */}
+      {/* Seat Grid */}
       {rows.map(row => (
         <div
           key={row}
@@ -129,7 +125,7 @@ function SeatGrid({ totalSeats, selectedSeats, setSelectedSeats, movieId ,refres
         </div>
       ))}
 
-      {/* 🔵 Legend */}
+      {/* Legend */}
       <div style={{ marginTop: "10px", color: "white" }}>
         <span style={{ marginRight: "15px" }}>⬛ Available</span>
         <span style={{ marginRight: "15px", color: "gold" }}>🟨 Selected</span>
