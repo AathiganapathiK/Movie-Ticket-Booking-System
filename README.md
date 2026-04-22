@@ -149,6 +149,18 @@ GET /movies/
 POST /movies/{movie_id}/book
 ```
 
+###  Delete Movies
+
+```
+DELETE /movies/{movie_id}
+```
+
+###  Get Booking Details
+
+```
+GET /movies/{movie_id}/bookings
+```
+
 ---
 
 ##  Important Edge Cases
