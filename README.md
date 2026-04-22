@@ -8,7 +8,7 @@ This project allows users to view movies, select seats, and book tickets with ba
 
 ---
 
-## 🚀 Features
+##  Features
 
 ###  Backend (FastAPI)
 
@@ -27,7 +27,7 @@ This project allows users to view movies, select seats, and book tickets with ba
 * Seat selection grid
 * Real-time seat availability updates
 * Booking form with validation
-* API integration using Axios
+* API integration using Axios    
 
 ###  Database (SQLite)
 
@@ -59,10 +59,15 @@ Movie-Ticket-Booking-System/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── BookingForm.jsx
+│   │   │   ├── MovieCard.jsx
+│   │   │   ├── MovieGrid.jsx
+│   │   │   └── SeatGrid.jsx
 │   │   ├── api/
+│   │   │   └── api.js
 │   │   ├── App.js
 │   │   └── index.js
-│   ├── package.json
+│   └── package.json
 │
 ├── movie_sdk/        # Generated SDK
 ├── seed_data.sql     # Sample data
@@ -148,10 +153,10 @@ POST /movies/{movie_id}/book
 
 ##  Business Logic (Important)
 
-* ❌ Cannot book same seat twice
-* ❌ Max 5 seats per user per movie
-* ❌ Cannot book non-existing movie
-* ✅ Real-time seat updates handled via API
+*  Cannot book same seat twice
+*  Max 5 seats per user per movie
+*  Cannot book non-existing movie
+*  Real-time seat updates handled via API
 
 ---
 
