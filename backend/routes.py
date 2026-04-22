@@ -86,7 +86,7 @@ def book_seat(movie_id: int, booking: BookingCreate, db: Session = Depends(get_d
     ).count()
 
     if count >= 5:
-        raise HTTPException(status_code=400, detail="Max 3 seats allowed")
+        raise HTTPException(status_code=400, detail="Max 5 seats allowed")
 
     new_booking = Booking(
         movie_id=movie_id,

@@ -1,19 +1,18 @@
 # Python
-env/
+backend/env/
 __pycache__/
 *.pyc
 
-# Backend specific
-backend/env/
-
 # Node
-node_modules/
+frontend/node_modules/
 
-# VS Code
+# Editor
 .vscode/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
-frontend/
+# Database (optional)
+backend/movies.db
+movies.db

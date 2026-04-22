@@ -1,0 +1,42 @@
+body {
+  background: #0d0d1a;
+  color: white;
+  font-family: Arial;
+}
+
+.card {
+  border: 1px solid #444;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  background: #1a1a2e;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid .card {
+  width: 200px;
+}
+
+.selected {
+  border: 2px solid gold;
+}
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 3px;
+
+  color: rgb(184, 3, 3)
+}
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 3px;
+  color: rgb(184, 3, 3)
+}
+
+h3{
+  color: aqua;
+}
