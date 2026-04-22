@@ -131,7 +131,7 @@ http://localhost:8000/docs
 
 ##  API Endpoints
 
-### ➤ Add Movie
+###  Add Movie
 
 ```
 POST /movies/
@@ -151,7 +151,7 @@ POST /movies/{movie_id}/book
 
 ---
 
-##  Business Logic (Important)
+##  Important Edge Cases
 
 *  Cannot book same seat twice
 *  Max 5 seats per user per movie
@@ -224,28 +224,16 @@ CREATE TABLE movie_bookings (
 
 ---
 
-##  Troubleshooting
-
-###  Axios Network Error
-
-* Ensure backend is running at `http://localhost:8000`
-* Check if API URL in frontend is correct
-
----
-
-###  ModuleNotFoundError (sqlalchemy)
-
-```bash
-cd backend
-env\Scripts\activate
-pip install -r requirements.txt
-```
-
----
-
 ###  No Movies Showing
 
-* Backend auto-seeds movies on startup
+* Backend auto-seeds movies on startup using seed_data.sql
+
+seed_data.sql
+```sql
+INSERT INTO movies (title, total_seats) VALUES ('Avengers', 50);
+INSERT INTO movies (title, total_seats) VALUES ('Inception', 30);
+INSERT INTO movies (title, total_seats) VALUES ('Interstellar', 40);
+```
 * Or add via Swagger UI
 
 ---
@@ -274,33 +262,9 @@ uvicorn main:app --reload --port 8001
 ##  Future Improvements
 
 * Authentication system
-* Multi-theatre support
-* Payment integration
+* Multiple Theatre support
+* Payment integration via Razor-pay
 * Real-time updates using WebSockets
 
 ---
 
-##  Notes
-
-* No Docker used (as per constraints)
-* Fully functional without manual configuration
-* Works on any system using provided scripts
-
----
-
-##  Author
-
-**Aathi**
-
----
-
-## Submission Status
-
-✔ Backend Complete
-✔ Frontend Complete
-✔ SDK Generated
-✔ Tests Passing
-✔ Scripts Working
-✔ README Provided
-
----
