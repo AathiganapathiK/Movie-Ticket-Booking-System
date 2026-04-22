@@ -1,13 +1,20 @@
 @echo off
+cd /d %~dp0
+
 echo ===== Starting backend =====
 
-call env\Scripts\activate
-
-start cmd /k "cd backend && uvicorn main:app --reload"
+start cmd /k ^
+"cd backend ^
+& IF NOT EXIST env python -m venv env ^
+& call env\Scripts\activate ^
+& pip install -r requirements.txt ^
+& uvicorn main:app --reload"
 
 echo ===== Starting frontend =====
 
-start cmd /k "cd frontend && npm start"
+start cmd /k ^
+"cd frontend ^
+& npm install ^
+& npm start"
 
-echo ===== Application running =====
 pause
