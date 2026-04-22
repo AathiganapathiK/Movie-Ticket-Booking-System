@@ -1,15 +1,18 @@
-from sqlalchemy import Column, Integer, String
-from database import Base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-class Movie(Base):
-    __tablename__ = "movies"
-    id = Column(Integer, primary_key=True)
-    title = Column(String)
-    total_seats = Column(Integer)
+DATABASE_URL = "sqlite:///./movies.db"
 
-class Booking(Base):
-    __tablename__ = "movie_bookings"
-    id = Column(Integer, primary_key=True)
-    movie_id = Column(Integer)
-    seat = Column(String)
-    user_name = Column(String)
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+
+SessionLocal = sessionmaker(bind=engine)
+
+Base = declarative_base()
+
+
+def get_db(): # Dependency injection
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

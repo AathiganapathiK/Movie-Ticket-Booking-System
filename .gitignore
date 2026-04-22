@@ -1,59 +1,17 @@
-# Virtual environment
-venv/
+# Python
 env/
-ENV/
-.venv/
-
-
-
-# Python cache
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
 
-# Environment variables
-.env
+# Backend specific
+backend/env/
 
-# Flask instance folder
-instance/
+# Node
+node_modules/
 
-# Logs
-*.log
+# VS Code
+.vscode/
 
 # OS files
 .DS_Store
 Thumbs.db
-
-# IDEs
-.vscode/
-.idea/
-
-# Large files (important for you)
-*.pkl
-*.zip
-
-
-node_modules/
-public/
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
